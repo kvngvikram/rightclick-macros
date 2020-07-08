@@ -1,12 +1,14 @@
 
 function s:Rightclick_normal_defaults()
-	let g:rightclick_normal_items = ['save', 'quit', 'undo bla']
-	let g:rightclick_normal_commands = ['w' , 'q', 'u']
+	let g:rightclick_normal_items = ['save', 'quit', 'undo', 'paste']
+	let g:rightclick_normal_commands = [':w' , ':q', 'u', 'p']
+	" Ctrl-v Ctrl-M in insert mode to get '', the literal for <Enter>
+	" Similarly Ctrl-v <Tab or Esc> for the corresponding literal characters.
 endfunction
 
 function s:Rightclick_visual_defaults()
-	let g:rightclick_visual_items = ['copy', 'cut']
-	let g:rightclick_visual_commands = ['y' , 'd']
+	let g:rightclick_visual_items = ['copy', 'cut', 'paste']
+	let g:rightclick_visual_commands = ['y' , 'd', 'p']
 endfunction
 
 if( !exists('rightclick_normal_items') || !exists('rightclick_normal_commands') )
@@ -23,6 +25,9 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set mouse=a
+set mousemodel=popup  "" This is for the popup menu in GUI, but it disables right-click drag (I don't want that).
+" Go to insert mode where ever you click
+nnoremap <LeftMouse> <LeftMouse>i
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let s:no_normal_items = len(rightclick_normal_items)
@@ -85,21 +90,30 @@ function Rightclick_normal()
 	let s:buf = nvim_create_buf(v:false, v:true)
 	call nvim_buf_set_lines(s:buf, 0, -1, v:true, g:rightclick_normal_items)
     call nvim_open_win(s:buf, v:true, s:normal_buf_opts)
-	let g:window_id = win_getid()
+	let g:rightclick_window_id = win_getid()
 	" setlocal winhl=Normal:Pmenu,CursorLine:PmenuSel
 	setlocal winhl=Normal:Floating
-	setlocal cursorline
+	" setlocal cursorline
+
+	let g:rightclick_normal_z_reg_backup = @z
+	let @z = ''
 
 	nnoremap <buffer> <silent> <LeftMouse> <LeftMouse>
-				\:let command_number = getcurpos()[1]<CR>
-				\:let new_window_id = win_getid()<CR>
-				\:call nvim_win_close(g:window_id, 1)<CR>
-				\:if(new_window_id == window_id) \| exe g:rightclick_normal_commands[command_number-1] \| endif<CR>
+				\:let g:rightclick_command_number = getcurpos()[1]<CR>
+				\:let g:rightclick_new_window_id = win_getid()<CR>
+				\:call nvim_win_close(g:rightclick_window_id, 1)<CR>
+				\:if(g:rightclick_new_window_id == rightclick_window_id)
+				\\| let @z = g:rightclick_normal_commands[g:rightclick_command_number-1]
+				\\|endif<CR>
+				\@z
+				\:let @z = g:rightclick_normal_z_reg_backup<CR>
 
 	nnoremap <buffer> <silent> <Esc> :bw<CR>
+				\:let @z = g:rightclick_normal_z_reg_backup<CR>
 
 	nnoremap <buffer> <silent> <RightMouse> <LeftMouse>
-				\:call nvim_win_close(g:window_id, 1)<CR>
+				\:call nvim_win_close(g:rightclick_window_id, 1)<CR>
+				\:let @z = g:rightclick_normal_z_reg_backup<CR>
 endfunction
 
 
@@ -111,26 +125,35 @@ function Rightclick_visual()
 	let s:buf = nvim_create_buf(v:false, v:true)
 	call nvim_buf_set_lines(s:buf, 0, -1, v:true, g:rightclick_visual_items)
     call nvim_open_win(s:buf, v:true, s:visual_buf_opts)
-	let g:window_id = win_getid()
+	stopinsert
+	let g:rightclick_window_id = win_getid()
 	" setlocal winhl=Normal:Pmenu,CursorLine:PmenuSel
 	setlocal winhl=Normal:Floating
-	setlocal cursorline
+	" setlocal cursorline
 
-	nnoremap <buffer> <silent> <LeftMouse> <LeftMouse>
-				\:let command_number = getcurpos()[1]<CR>
-				\:let new_window_id = win_getid()<CR>
-				\:call nvim_win_close(g:window_id, 1)<CR>
-				\:if(new_window_id == window_id) \| exe g:rightclick_visual_commands[command_number-1] \| endif<CR>
+	let g:rightclick_visual_z_reg_backup = @z
+	let @z = ''
+
+	noremap <buffer> <silent> <LeftMouse> <LeftMouse>
+				\:let g:rightclick_command_number = getcurpos()[1]<CR>
+				\:let g:rightclick_new_window_id = win_getid()<CR>
+				\:call nvim_win_close(g:rightclick_window_id, 1)<CR>
+				\:if(g:rightclick_new_window_id == rightclick_window_id)
+				\\| let @z = g:rightclick_visual_commands[g:rightclick_command_number-1]
+				\\|endif<CR>
+				\gv@z
+				\:let @z = g:rightclick_visual_z_reg_backup<CR>
 
 	nnoremap <buffer> <silent> <Esc> :bw<CR>
+				\:let @z = g:rightclick_visual_z_reg_backup<CR>
 
 	nnoremap <buffer> <silent> <RightMouse> <LeftMouse>
-				\:call nvim_win_close(g:window_id, 1)<CR>
+				\:call nvim_win_close(g:rightclick_window_id, 1)<CR>
+				\:let @z = g:rightclick_visual_z_reg_backup<CR>
 endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_normal()<CR>
-" nnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_normal()<CR>
-vnoremap <silent> <RightMouse> :call Rightclick_visual()<CR>
+vnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_visual()<CR>
