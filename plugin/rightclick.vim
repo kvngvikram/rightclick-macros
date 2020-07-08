@@ -1,7 +1,7 @@
 
 function s:Rightclick_normal_defaults()
-	let g:rightclick_normal_items = ['save', 'quit', 'undo', 'paste']
-	let g:rightclick_normal_commands = [':w' , ':q', 'u', 'p']
+	let g:rightclick_normal_items = ['save', 'quit', 'undo', 'redo', 'paste']
+	let g:rightclick_normal_commands = [':w' , ':q', 'u', '', 'p']
 	" Ctrl-v Ctrl-M in insert mode to get '', the literal for <Enter>
 	" Similarly Ctrl-v <Tab or Esc> for the corresponding literal characters.
 endfunction
@@ -156,4 +156,5 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_normal()<CR>
+inoremap <silent> <RightMouse> <Esc><LeftMouse>:call Rightclick_normal()<CR>
 vnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_visual()<CR>
