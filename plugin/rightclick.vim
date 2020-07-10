@@ -7,14 +7,18 @@ if (s:rightclick_default_mappings)
 	nnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_normal()<CR>
 	inoremap <silent> <RightMouse> <Esc>:call Rightclick_normal()<CR>
 	vnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_visual()<CR>
+	" Go to insert mode where ever you click
 	nnoremap <LeftMouse> <LeftMouse>i
 endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Initial configurations
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set mouse=a
-set mousemodel=popup  "" This is for the popup menu in GUI, but it disables right-click drag (I don't want that).
-" Go to insert mode where ever you click
+let s:rightclick_default_config = exists('g:rightclick_default_config') ? g:rightclick_default_config : 1
+if (s:rightclick_default_config)
+	set mouse=a
+	set mousemodel=popup  "" This is for the popup menu in GUI, but it disables right-click drag (I don't want that).
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Menu items check
