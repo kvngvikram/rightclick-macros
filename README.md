@@ -11,7 +11,7 @@ Use cases
 ---------
 ### Mouse
 
->I want my colleagues to be able to work along with me on the same computer. If they want to do something, I don't want them to try, fail and ask me to do it.
+>I want my colleagues to be able to work along with me on the same computer at the same time. If they want to do something, I don't want them to try, fail and ask me to do it.
 
 Usually there is no need to use the mouse wile using vim. But having a mouse functionality will help the beginners to make the learning wall less steep.
 
