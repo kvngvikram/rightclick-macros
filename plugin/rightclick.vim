@@ -1,11 +1,20 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:rightclick_default_mappings = exists('g:rightclick_default_mappings') ? g:rightclick_default_mappings : 1
+if (s:rightclick_default_mappings)
+	nnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_normal()<CR>
+	inoremap <silent> <RightMouse> <Esc>:call Rightclick_normal()<CR>
+	vnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_visual()<CR>
+	nnoremap <LeftMouse> <LeftMouse>i
+endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Initial configurations
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set mouse=a
 set mousemodel=popup  "" This is for the popup menu in GUI, but it disables right-click drag (I don't want that).
 " Go to insert mode where ever you click
-nnoremap <LeftMouse> <LeftMouse>i
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Menu items check
@@ -61,12 +70,13 @@ endfor
 
 if has('nvim')
 
-	let g:rightclick_nvim_boarder_nw = exists('g:rightclick_nvim_boarder_nw') ? g:rightclick_nvim_boarder_nw : '╭'
-	let g:rightclick_nvim_boarder_ne = exists('g:rightclick_nvim_boarder_ne') ? g:rightclick_nvim_boarder_ne : '╮'
-	let g:rightclick_nvim_boarder_sw = exists('g:rightclick_nvim_boarder_sw') ? g:rightclick_nvim_boarder_sw : '╰'
-	let g:rightclick_nvim_boarder_se = exists('g:rightclick_nvim_boarder_se') ? g:rightclick_nvim_boarder_se : '╯'
-	let g:rightclick_nvim_boarder_h  = exists('g:rightclick_nvim_boarder_h ') ? g:rightclick_nvim_boarder_h  : '─'
-	let g:rightclick_nvim_boarder_v  = exists('g:rightclick_nvim_boarder_v ') ? g:rightclick_nvim_boarder_v  : '│'
+	let s:rightclick_nvim_boarder_nw = exists('g:rightclick_nvim_boarder_nw') ? g:rightclick_nvim_boarder_nw : '╭'
+	let s:rightclick_nvim_boarder_ne = exists('g:rightclick_nvim_boarder_ne') ? g:rightclick_nvim_boarder_ne : '╮'
+	let s:rightclick_nvim_boarder_sw = exists('g:rightclick_nvim_boarder_sw') ? g:rightclick_nvim_boarder_sw : '╰'
+	let s:rightclick_nvim_boarder_se = exists('g:rightclick_nvim_boarder_se') ? g:rightclick_nvim_boarder_se : '╯'
+	let s:rightclick_nvim_boarder_h  = exists('g:rightclick_nvim_boarder_h' ) ? g:rightclick_nvim_boarder_h  : '─'
+	let s:rightclick_nvim_boarder_v  = exists('g:rightclick_nvim_boarder_v' ) ? g:rightclick_nvim_boarder_v  : '│'
+
 
 	let s:normal_width += 4
 	let i = 0
@@ -74,12 +84,12 @@ if has('nvim')
 		if( len(rightclick_normal_items[i]) < s:normal_width )
 			let rightclick_normal_items[i] = rightclick_normal_items[i] . repeat(' ', s:normal_width - len(rightclick_normal_items[i]) - 4 )
 		endif
-		let rightclick_normal_items[i] = rightclick_nvim_boarder_v . ' ' . rightclick_normal_items[i] . ' ' . rightclick_nvim_boarder_v
+		let rightclick_normal_items[i] = s:rightclick_nvim_boarder_v . ' ' . rightclick_normal_items[i] . ' ' . s:rightclick_nvim_boarder_v
 		let i += 1
 	endwhile
 
-	let rightclick_normal_items = [rightclick_nvim_boarder_nw . repeat(rightclick_nvim_boarder_h, s:normal_width - 2) . rightclick_nvim_boarder_ne] +
-				\rightclick_normal_items + [rightclick_nvim_boarder_sw . repeat(rightclick_nvim_boarder_h, s:normal_width - 2) . rightclick_nvim_boarder_se]
+	let rightclick_normal_items = [s:rightclick_nvim_boarder_nw . repeat(s:rightclick_nvim_boarder_h, s:normal_width - 2) . s:rightclick_nvim_boarder_ne] +
+				\rightclick_normal_items + [s:rightclick_nvim_boarder_sw . repeat(s:rightclick_nvim_boarder_h, s:normal_width - 2) . s:rightclick_nvim_boarder_se]
 	let rightclick_normal_macros = [' '] + rightclick_normal_macros + [' ']
 
 	let s:normal_height = len(rightclick_normal_items)
@@ -92,56 +102,16 @@ if has('nvim')
 		if( len(rightclick_visual_items[i]) < s:visual_width )
 			let rightclick_visual_items[i] = rightclick_visual_items[i] . repeat(' ', s:visual_width - len(rightclick_visual_items[i]) - 4 )
 		endif
-		let rightclick_visual_items[i] = rightclick_nvim_boarder_v . ' ' . rightclick_visual_items[i] . ' ' . rightclick_nvim_boarder_v
+		let rightclick_visual_items[i] = s:rightclick_nvim_boarder_v . ' ' . rightclick_visual_items[i] . ' ' . s:rightclick_nvim_boarder_v
 		let i += 1
 	endwhile
 
-	let rightclick_visual_items = [rightclick_nvim_boarder_nw . repeat(rightclick_nvim_boarder_h, s:visual_width - 2) . rightclick_nvim_boarder_ne] +
-				\ rightclick_visual_items + [rightclick_nvim_boarder_sw . repeat(rightclick_nvim_boarder_h, s:visual_width - 2) . rightclick_nvim_boarder_se]
+	let rightclick_visual_items = [s:rightclick_nvim_boarder_nw . repeat(s:rightclick_nvim_boarder_h, s:visual_width - 2) . s:rightclick_nvim_boarder_ne] +
+				\ rightclick_visual_items + [s:rightclick_nvim_boarder_sw . repeat(s:rightclick_nvim_boarder_h, s:visual_width - 2) . s:rightclick_nvim_boarder_se]
 	let rightclick_visual_macros = [' '] + rightclick_visual_macros + [' ']
 
 	let s:visual_height = len(rightclick_visual_items)
 	let s:visual_buf_opts = {'relative': 'cursor', 'row': 1, 'col': 0, 'width': s:visual_width, 'height': s:visual_height, 'style': 'minimal'}
-
-
-	nnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_normal_nvim()<CR>
-	inoremap <silent> <RightMouse> <Esc>:call Rightclick_normal_nvim()<CR>
-	vnoremap <silent> <RightMouse> <LeftMouse>:call Rightclick_visual_nvim()<CR>
-
-else
-
-	nnoremap <silent> <RightMouse> <LeftMouse>:call popup_create(rightclick_normal_items, #{
-				\ title: "Use keyboard",
-				\ callback: 'Rightclick_normal_vim',
-				\ line: 'cursor+1',
-				\ col: 'cursor',
-				\ border: [],
-				\ cursorline: 1,
-				\ padding: [0,1,0,1],
-				\ filter: 'popup_filter_menu'
-				\ })<CR>
-
-	inoremap <silent> <RightMouse> <Esc>:call popup_create(rightclick_normal_items, #{
-				\ title: "Use keyboard",
-				\ callback: 'Rightclick_normal_vim',
-				\ line: 'cursor+1',
-				\ col: 'cursor',
-				\ border: [],
-				\ cursorline: 1,
-				\ padding: [0,1,0,1],
-				\ filter: 'popup_filter_menu'
-				\ })<CR>
-
-	vnoremap <silent> <RightMouse> <LeftMouse>:call popup_create(rightclick_visual_items, #{
-				\ title: "Use keyboard",
-				\ callback: 'Rightclick_visual_vim',
-				\ line: 'cursor+1',
-				\ col: 'cursor',
-				\ border: [],
-				\ cursorline: 1,
-				\ padding: [0,1,0,1],
-				\ filter: 'popup_filter_menu'
-				\ })<CR>
 
 endif
 
@@ -149,26 +119,66 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Functions for neovim and vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function Rightclick_normal_vim(id, result)
-
-	let s:rightclick_normal_z_reg_backup = @z
-	let @z = g:rightclick_normal_macros[a:result - 1]
-	normal @z
-	let @z = s:rightclick_normal_z_reg_backup
+" Generic function
+function Rightclick_normal()
+	if has('nvim')
+		call s:Rightclick_normal_nvim()
+	else
+		call popup_create(g:rightclick_normal_items, #{
+				\ title: "Use keyboard",
+				\ callback: 'Rightclick_normal_vim_callback',
+				\ line: 'cursor+1',
+				\ col: 'cursor',
+				\ border: [],
+				\ cursorline: 1,
+				\ padding: [0,1,0,1],
+				\ filter: 'popup_filter_menu'
+				\ })
+	endif
 endfunction
 
 
-function Rightclick_visual_vim(id, result)
-
-	let s:rightclick_visual_z_reg_backup = @z
-	let @z = g:rightclick_visual_macros[a:result - 1]
-	normal gv@z
-	let @z = s:rightclick_visual_z_reg_backup
+" Generic function
+function Rightclick_visual()
+	if has('nvim')
+		call s:Rightclick_visual_nvim()
+	else
+		call popup_create(g:rightclick_visual_items, #{
+				\ title: "Use keyboard",
+				\ callback: 'Rightclick_visual_vim_callback',
+				\ line: 'cursor+1',
+				\ col: 'cursor',
+				\ border: [],
+				\ cursorline: 1,
+				\ padding: [0,1,0,1],
+				\ filter: 'popup_filter_menu'
+				\ })
+	endif
 endfunction
 
 
-function Rightclick_normal_nvim()
+" Callback functions are required only in Vim
+if !has('nvim')
+	function Rightclick_normal_vim_callback(id, result)
+
+		let s:rightclick_normal_z_reg_backup = @z
+		let @z = g:rightclick_normal_macros[a:result - 1]
+		normal @z
+		let @z = s:rightclick_normal_z_reg_backup
+	endfunction
+
+
+	function Rightclick_visual_vim_callback(id, result)
+
+		let s:rightclick_visual_z_reg_backup = @z
+		let @z = g:rightclick_visual_macros[a:result - 1]
+		normal gv@z
+		let @z = s:rightclick_visual_z_reg_backup
+	endfunction
+endif
+
+
+function s:Rightclick_normal_nvim()
 
 	let s:buf = nvim_create_buf(v:false, v:true)
 	call nvim_buf_set_lines(s:buf, 0, -1, v:true, g:rightclick_normal_items)
@@ -177,6 +187,7 @@ function Rightclick_normal_nvim()
 	" setlocal winhl=Normal:Pmenu,CursorLine:PmenuSel
 	setlocal winhl=Normal:Floating
 	" setlocal cursorline
+	normal jl
 
 	let g:rightclick_normal_z_reg_backup = @z
 	let @z = ''
@@ -209,7 +220,7 @@ function Rightclick_normal_nvim()
 endfunction
 
 
-function Rightclick_visual_nvim()
+function s:Rightclick_visual_nvim()
 
 	let s:buf = nvim_create_buf(v:false, v:true)
 	call nvim_buf_set_lines(s:buf, 0, -1, v:true, g:rightclick_visual_items)
@@ -219,6 +230,7 @@ function Rightclick_visual_nvim()
 	" setlocal winhl=Normal:Pmenu,CursorLine:PmenuSel
 	setlocal winhl=Normal:Floating
 	" setlocal cursorline
+	normal jl
 
 	let g:rightclick_visual_z_reg_backup = @z
 	let @z = ''
