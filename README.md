@@ -17,7 +17,7 @@ Usually there is no need to use the mouse wile using vim. But having a mouse fun
 
 When working with different programs with mouse, there is no need to switch to keyboard for working in vim window.
 
-Can be used over ssh (not tested yet).
+When someone usually don't use vim but is stuck with it in SSH sessions.
 
 But this is not the case with Vim. Popups in Vim cannot be selected with mouse because they are non focusable whereas in Neovim these menus are separate windows that can be focussed (so mouse can be used).
 
