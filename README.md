@@ -21,7 +21,7 @@ But this is not the case with Vim. Popups in Vim cannot be selected with mouse b
 
 ### Handy macros
 
-It is possible that some macros are used very often. By having a custom key mapping (or right-click) these macros will be accessible from a small menu. Visual mode macros are run in the same way as normal mode but after running `gv`to select the previously selected text. This is because when the menu appears, the visual selection is lost.
+It is possible that some macros are used very often. By having a custom key mapping (or right-click) these macros will be accessible from a small menu. Visual mode macros are run in the same way as normal mode but after running `gv` to select the previously selected text. This is because when the menu appears, the visual selection is lost.
 
 Configuration
 -------------
