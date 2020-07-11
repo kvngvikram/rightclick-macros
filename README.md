@@ -11,15 +11,15 @@ Use cases
 ---------
 ### Mouse
 
->I want my colleagues to be able to work along with me on the same computer at the same time. If they want to do something, I don't want them to try, fail and ask me to do it.
+>Colleagues used to come to my desk to help with something. They try to do something, fail, ask me to do it and then complain about not using a “user friendly” editor.
 
 Usually there is no need to use the mouse wile using vim. But having a mouse functionality will help the beginners to make the learning wall less steep.
 
 When working with different programs with mouse, there is no need to switch to keyboard for working in vim window.
 
-When someone usually don't use vim but is stuck with it in SSH sessions.
+You can have right-click menus while editing even in SSH sessions.
 
-But this is not the case with Vim. Popups in Vim cannot be selected with mouse because they are non focusable whereas in Neovim these menus are separate windows that can be focussed (so mouse can be used).
+But this is not the case with Vim. Popups in Vim cannot be selected with mouse because they are non focusable whereas in Neovim these menus are separate windows that can be focussed (so mouse can be used). So in Vim you still can have a menu when you right-click but then you have to select using keyboard.
 
 ### Handy macros
 
