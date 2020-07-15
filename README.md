@@ -84,7 +84,7 @@ With custom keyboard mappings this plugin can be used just to run the macros whe
 
 In Neovim, the boarders are made of special fonts. If there is any problem in displaying them then add the following lines in `.vimrc` or `init.vim` to overwrite the default characters.
 ``` vim
-let g:rightclick_nvim_boarder_nw = "."
+let g:rightclick_nvim_boarder_nw = "^"
 let g:rightclick_nvim_boarder_ne = "."
 let g:rightclick_nvim_boarder_sw = "'"
 let g:rightclick_nvim_boarder_se = "'"

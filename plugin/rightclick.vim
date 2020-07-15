@@ -71,10 +71,9 @@ endfor
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Run neovim or vim parts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 if has('nvim')
 
-	let s:rightclick_nvim_boarder_nw = exists('g:rightclick_nvim_boarder_nw') ? g:rightclick_nvim_boarder_nw : '╭'
+	let s:rightclick_nvim_boarder_nw = exists('g:rightclick_nvim_boarder_nw') ? g:rightclick_nvim_boarder_nw : '├'  " it was '╭' before
 	let s:rightclick_nvim_boarder_ne = exists('g:rightclick_nvim_boarder_ne') ? g:rightclick_nvim_boarder_ne : '╮'
 	let s:rightclick_nvim_boarder_sw = exists('g:rightclick_nvim_boarder_sw') ? g:rightclick_nvim_boarder_sw : '╰'
 	let s:rightclick_nvim_boarder_se = exists('g:rightclick_nvim_boarder_se') ? g:rightclick_nvim_boarder_se : '╯'
@@ -97,7 +96,6 @@ if has('nvim')
 	let rightclick_normal_macros = [' '] + rightclick_normal_macros + [' ']
 
 	let s:normal_height = len(rightclick_normal_items)
-	let s:normal_buf_opts = {'relative': 'cursor', 'row': 1, 'col': 0, 'width': s:normal_width, 'height': s:normal_height, 'style': 'minimal'}
 
 
 	let s:visual_width += 4
@@ -115,7 +113,6 @@ if has('nvim')
 	let rightclick_visual_macros = [' '] + rightclick_visual_macros + [' ']
 
 	let s:visual_height = len(rightclick_visual_items)
-	let s:visual_buf_opts = {'relative': 'cursor', 'row': 1, 'col': 0, 'width': s:visual_width, 'height': s:visual_height, 'style': 'minimal'}
 
 endif
 
@@ -184,9 +181,20 @@ endif
 
 function s:Rightclick_normal_nvim()
 
+	let l:cursor_row = 1  " float window left top corner should be one row below the cursor location
+	" Scroll window lines downwards with CTRL-E to fit the menu if the cursor
+	" line is at the end of the window
+	let l:no_lines_below_cursorline_in_win = nvim_win_get_height(0) - (line('.') - line('w0')) - 1
+	if( s:normal_height > l:no_lines_below_cursorline_in_win)
+		exe 'normal ' . (s:normal_height - l:no_lines_below_cursorline_in_win) . ''
+		let l:cursor_row -= (s:normal_height - l:no_lines_below_cursorline_in_win)
+	endif
+
+	let l:normal_buf_opts = {'relative': 'cursor', 'row': l:cursor_row, 'col': 0, 'width': s:normal_width, 'height': s:normal_height, 'style': 'minimal'}
+
 	let s:buf = nvim_create_buf(v:false, v:true)
 	call nvim_buf_set_lines(s:buf, 0, -1, v:true, g:rightclick_normal_items)
-    call nvim_open_win(s:buf, v:true, s:normal_buf_opts)
+    call nvim_open_win(s:buf, v:true, l:normal_buf_opts)
 	let g:rightclick_window_id = win_getid()
 	" setlocal winhl=Normal:Pmenu,CursorLine:PmenuSel
 	setlocal winhl=Normal:Floating
@@ -226,9 +234,20 @@ endfunction
 
 function s:Rightclick_visual_nvim()
 
+	let l:cursor_row = 1  " float window left top corner should be one row below the cursor location
+	" Scroll window lines downwards with CTRL-E to fit the menu if the cursor
+	" line is at the end of the window
+	let l:no_lines_below_cursorline_in_win = nvim_win_get_height(0) - (line('.') - line('w0')) - 1
+	if( s:visual_height > l:no_lines_below_cursorline_in_win)
+		exe 'normal ' . (s:visual_height - l:no_lines_below_cursorline_in_win) . ''
+		let l:cursor_row -= (s:visual_height - l:no_lines_below_cursorline_in_win)
+	endif
+
+	let l:visual_buf_opts = {'relative': 'cursor', 'row': l:cursor_row, 'col': 0, 'width': s:visual_width, 'height': s:visual_height, 'style': 'minimal'}
+
 	let s:buf = nvim_create_buf(v:false, v:true)
 	call nvim_buf_set_lines(s:buf, 0, -1, v:true, g:rightclick_visual_items)
-    call nvim_open_win(s:buf, v:true, s:visual_buf_opts)
+    call nvim_open_win(s:buf, v:true, l:visual_buf_opts)
 	stopinsert
 	let g:rightclick_window_id = win_getid()
 	" setlocal winhl=Normal:Pmenu,CursorLine:PmenuSel
