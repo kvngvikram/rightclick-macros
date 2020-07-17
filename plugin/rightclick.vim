@@ -167,19 +167,23 @@ endfunction
 if !has('nvim')
 	function Rightclick_normal_vim_callback(id, result)
 
-		let s:rightclick_normal_z_reg_backup = @z
-		let @z = g:rightclick_normal_macros[a:result - 1]
-		normal @z
-		let @z = s:rightclick_normal_z_reg_backup
+		if(a:result != -1)
+			let s:rightclick_normal_z_reg_backup = @z
+			let @z = g:rightclick_normal_macros[a:result - 1]
+			normal @z
+			let @z = s:rightclick_normal_z_reg_backup
+		endif
 	endfunction
 
 
 	function Rightclick_visual_vim_callback(id, result)
 
-		let s:rightclick_visual_z_reg_backup = @z
-		let @z = g:rightclick_visual_macros[a:result - 1]
-		normal gv@z
-		let @z = s:rightclick_visual_z_reg_backup
+		if(a:result != -1)
+			let s:rightclick_visual_z_reg_backup = @z
+			let @z = g:rightclick_visual_macros[a:result - 1]
+			normal gv@z
+			let @z = s:rightclick_visual_z_reg_backup
+		endif
 	endfunction
 endif
 
