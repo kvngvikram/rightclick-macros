@@ -3,9 +3,10 @@ rightclick-macros
 
 **rightclick-macros** is a plugin for Neovim and Vim. The main goal is to get a text based menu in terminal (Neo)Vim at the location where user does a right-click with mouse. And then can select any of the options similar to any right-click menu in a GUI programs. Each option runs the corresponding macro in normal or visual mode.
 
-![](screenshot.png)
+![](screenshots/screenshot-neovim.png)
+![](screenshots/screenshot-vim.png)
 
-Screenshot when mouse right-clicked on letter 'n' in the word 'normal'.
+Screenshot when mouse right-clicked on letter 'i' in the word 'with' in Neovim and Vim.
 
 Use cases
 ---------
@@ -91,3 +92,10 @@ let g:rightclick_nvim_boarder_se = "'"
 let g:rightclick_nvim_boarder_h  = "-"
 let g:rightclick_nvim_boarder_v  = "|"
 ```
+
+ToDo
+----
+
+* Make it work for terminal windows inside vim.
+* Try autoload directory.
+* Neovim: virtual cursor in original window to show cursor position?
