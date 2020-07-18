@@ -192,16 +192,14 @@ function s:Rightclick_normal_nvim()
 
 	" Scroll window lines downwards with CTRL-E to fit the menu if the cursor
 	" line is at the end of the window
-	let l:no_lines_below_cursorline_in_win = nvim_win_get_height(0) - (line('.') - line('w0')) - 1
+	let l:no_lines_below_cursorline_in_win = winheight(0) - winline()
 	if( s:normal_height > l:no_lines_below_cursorline_in_win)
-		let g:rightclick_enable_wrap_later = &wrap ? 1 : 0
-		set nowrap
 		exe 'normal ' . (s:normal_height - l:no_lines_below_cursorline_in_win) . ''
 	endif
 
 	let l:no_cols_after_cursor_in_win = winwidth(0) - wincol()
 	if( s:normal_width > l:no_cols_after_cursor_in_win + 1 )
-		let g:rightclick_enable_wrap_later = (g:rightclick_enable_wrap_later || &wrap) ? 1 : 0
+		let g:rightclick_enable_wrap_later = &wrap ? 1 : 0
 		set nowrap
 		exe 'normal '.(s:normal_width - l:no_cols_after_cursor_in_win -1).'zl'
 	endif
@@ -267,16 +265,14 @@ function s:Rightclick_visual_nvim()
 
 	" Scroll window lines downwards with CTRL-E to fit the menu if the cursor
 	" line is at the end of the window
-	let l:no_lines_below_cursorline_in_win = nvim_win_get_height(0) - (line('.') - line('w0')) - 1
+	let l:no_lines_below_cursorline_in_win = winheight(0) - winline()
 	if( s:visual_height > l:no_lines_below_cursorline_in_win)
-		let g:rightclick_enable_wrap_later = &wrap ? 1 : 0
-		set nowrap
 		exe 'normal ' . (s:visual_height - l:no_lines_below_cursorline_in_win) . ''
 	endif
 
 	let l:no_cols_after_cursor_in_win = winwidth(0) - wincol()
 	if( s:visual_width > l:no_cols_after_cursor_in_win + 1 )
-		let g:rightclick_enable_wrap_later = (g:rightclick_enable_wrap_later || &wrap) ? 1 : 0
+		let g:rightclick_enable_wrap_later = &wrap ? 1 : 0
 		set nowrap
 		exe 'normal '.(s:visual_width - l:no_cols_after_cursor_in_win -1).'zl'
 	endif
