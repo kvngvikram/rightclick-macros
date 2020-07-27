@@ -224,7 +224,7 @@ function s:Rightclick_normal_nvim()
 				\:if(g:rightclick_new_window_id == rightclick_window_id)
 				\\| let @z = g:rightclick_normal_macros[g:rightclick_command_number-1]
 				\\|endif<CR>
-				\@z
+				\@z
 				\:let @z = g:rightclick_normal_z_reg_backup<CR>
 				\:if(g:rightclick_enable_wrap_later)
 				\\| set wrap
@@ -237,7 +237,7 @@ function s:Rightclick_normal_nvim()
 				\:if(g:rightclick_new_window_id == rightclick_window_id)
 				\\| let @z = g:rightclick_normal_macros[g:rightclick_command_number-1]
 				\\|endif<CR>
-				\@z
+				\@z
 				\:let @z = g:rightclick_normal_z_reg_backup<CR>
 				\:if(g:rightclick_enable_wrap_later)
 				\\| set wrap
@@ -298,7 +298,7 @@ function s:Rightclick_visual_nvim()
 				\:if(g:rightclick_new_window_id == rightclick_window_id)
 				\\| let @z = g:rightclick_visual_macros[g:rightclick_command_number-1]
 				\\|endif<CR>
-				\gv@z
+				\gv@z
 				\:let @z = g:rightclick_visual_z_reg_backup<CR>
 				\:if(g:rightclick_enable_wrap_later)
 				\\| set wrap
@@ -311,7 +311,7 @@ function s:Rightclick_visual_nvim()
 				\:if(g:rightclick_new_window_id == rightclick_window_id)
 				\\| let @z = g:rightclick_visual_macros[g:rightclick_command_number-1]
 				\\|endif<CR>
-				\gv@z
+				\gv@z
 				\:let @z = g:rightclick_visual_z_reg_backup<CR>
 				\:if(g:rightclick_enable_wrap_later)
 				\\| set wrap
